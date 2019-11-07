@@ -58,10 +58,12 @@ function each(coll, f) {
   //solve it using the most appropriate helper functions(reduce,each,map,filter).
   //wordLengths("hello its me") // [5,3,2]
   
-  function wordLengths(str) {
-      // TODO: your code here 
+  function wordLengths(str) { 
+  	var acc = [];
+  return each(str, function( string, i) { // iwanted to loop with each and push to a new array the length of every word in the string
+    return acc.push(string[i].length);
+  });
   }
-  
   //=============================================================================
   /*                                  Q2                                    */
   //=============================================================================
@@ -72,8 +74,14 @@ function each(coll, f) {
   // countOccurrences("hello, world!", "l"); // 3
   
   function countOccurrences(string, character) {
-      // your code is here
-  }
+  return reduce(string, function(acc, str) {     //i used reduce because it return one thing and here a number 
+    if (str === character) {						// i checked if the character is there every time we found it we increment with one and we start the count from 0
+      return ++acc;								
+    }
+    return acc;
+  },0);
+}
+ 
   
   //=============================================================================
   /*                                  Q3                                    */
@@ -84,8 +92,12 @@ function each(coll, f) {
   // wordsLongerThanThree("Hello Mad World") //["Hello", "World"]
   
   function wordsLongerThanThree(str) {
-      // TODO: your code here 
-  }
+     return filter(str, function(string) {   // i simply wanted to filter throw the string and return only the world with length mroe then 3
+		return string.length > 3;
+	});
+}
+
+  
   
   //=============================================================================
   /*                                  Q4                                        */
@@ -99,7 +111,10 @@ function each(coll, f) {
   //repeatString('dog', 3); // => 'dog' + 'dog' + 'dog' => 'dogdogdog'
   
   function repeatString(str, count) { 
-   // TODO: your code here 
+  	if(count === 0) {							// if the count  = 0 is our stop condition
+  		return '';
+  	}
+  	return str + repeatString(str, count- 1);		// then we keep adding str + str and decreasing the count until it reach 0
   } 
    
   
@@ -129,7 +144,33 @@ function each(coll, f) {
   // pizza.eatSlice();
   
   // Write your code here .....
-  
+  function makePizza(crust, size, numberOfSlice ) { 
+  	var ingredients = [];
+  	return {
+  	crust: crust,
+  	size: size,
+  	numberOfSlice : numberOfSlice,
+
+  	addIngredients: function(ingredient){     // i pushed the ingredient in an array to use that array later 
+  		ingredients.push(ingredients)
+  	},
+  	displayIngredients: function(){
+  		return 'The ingredients are:' + ingredients.join(',') // i joined the ingredient in the array with ,
+  	},
+  	bakePizza: function(){
+  		return 'your'+ crust +' ' + size + ' '+ numberOfSlice +'pizza is done' 
+  	},
+  	eatSlice: function(numberOfSlice){
+  		if(numberOfSlice > 0) {
+  			numberOfSlice = numberOfSlice - 1   // iwanted to decrease the numberOfSlice every time we call the function until it become 0
+  		} else {
+  			return 'you can\'t eat the plat'
+  		}
+  	}
+
+  	}
+
+  }
   //=============================================================================
   /*                                  Q6                                      */
   //=============================================================================
@@ -153,8 +194,34 @@ function each(coll, f) {
   */
   
   // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
-  
+  // Yes I am
   // Write your code here .....
+  function ReadingList(name) {
+  	var book = {};
+  		book.name = name;
+  		book.addInfo = addInfo;
+  		book.addBook= addBook;
+  		book.finishCurrentBook = finishCurrentBook;
+  }
+  function addInfo (read, unRead, toRead, currentRead, readBooks) {
+  	this.read = read;
+  	this.unRead =unRead;
+  	this.toRead = toRead;
+  	this.currentRead = currentRead;
+  	this.readBooks = readBooks;
+  }
+  function AddBook(book) {
+  	this.readBooks.push(book);
+  	this.unRead = this.unRead + 1 ;
+
+  }
+  function finishCurrentBook() {
+  	this.readBooks.push(currentRead) 
+  	this.read = this.read + 1
+  	this.currentRead = this.toRead[0] 
+  	this.unread = this.unread - 1
+  }
+
   
   //=============================================================================
   /*                                  Q7                                       */
@@ -175,7 +242,24 @@ function each(coll, f) {
   //  safe('money','small') => "watch gold-bar money"
   
   // Write your code here .....
-  
+  	function makeSafe(storageLimit) {
+  		return {
+  			storageLimit : storageLimit,
+  			addItem:function(item, itemSize) {
+  				var Sizes = {'big': 3, 'medium': 2, 'small': 1}
+  				if(itemSize !== sizes[key]) {
+  					return 'wrong size'
+  				}
+  				if(itemSize > storageLimit){
+  					return "Can't fit"
+  				}
+  				if(itemSize = storageLimit) {
+  					return item;
+  				}
+  			}                                            ////////I'm out of time 
+  		}
+
+  	}
   //=============================================================================
   /*                                  Q8                                       */
   //=============================================================================
@@ -216,10 +300,10 @@ function each(coll, f) {
   //================================================================================
   // Theoretical questions.
   // 1- In your own words,Why do we use Closures ?
-  
+  // we use closure to take control of th scopre and variabales
   // 2- In OOP, what does "this" refer to ?
-  
+  //this refers to the current object or item 
   // 3- What is jQuery?
-  
+  //jQuery is a javascript library
   // 4- what is the diffrence between Closure's methods and The OOP's methods?
-  
+  //in OOP we creat classes with states and behaviours but in closure we create nested functions to controle the variabales and the sopes
